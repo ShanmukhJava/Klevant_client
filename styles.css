@@ -7,7 +7,7 @@
 
 :root {
     /* Brand Colors */
-    --primary-color: rgb(0, 0, 0);  /* Blue */
+    --primary-color: rgb(142, 102, 169);  /* Blue */
     --primary-light: rgba(82, 99, 217, 0.1);
     --primary-medium: rgba(82, 99, 217, 0.8);
     --primary-dark: rgba(62, 79, 197, 1);  /* Darker blue */
@@ -17,7 +17,7 @@
     --secondary-color: #d9dde6;  /* Light gray */
     --success-color: #fea200;  /* Using orange for success */
     --warning-color: rgba(255, 163, 0, 1);  /* Orange variant */
-    --danger-color: #15141a;  /* Dark color */
+    --danger-color: #4726f1;  /* Dark color */
     
     /* Neutral Colors */
     --text-primary: #15141a;  /* Dark text */
@@ -2222,7 +2222,7 @@ footer::before {
     margin-bottom: var(--space-lg);
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 600;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    background: linear-gradient(105deg, var(--primary-color) 0%, var(--accent-color) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -2622,7 +2622,7 @@ footer::before {
     padding: var(--space-3xl) 0;
     background: 
         linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%),
-        radial-gradient(circle at 30% 70%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(246, 128, 86, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 70% 30%, rgba(171, 17, 7, 0.1) 0%, transparent 50%);
     position: relative;
     overflow: hidden;
@@ -2640,7 +2640,7 @@ footer::before {
             60deg,
             transparent,
             transparent 40px,
-            rgba(255, 255, 255, 0.02) 42px
+            rgba(58, 64, 234, 0.02) 42px
         );
     pointer-events: none;
 }
@@ -2649,23 +2649,25 @@ footer::before {
     font-family: var(--font-heading);
     text-align: center;
     margin-bottom: var(--space-3xl);
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 800;
-    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffcc02 100%);
-    -webkit-background-clip: text;
+    /* background: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffcc02 100%); */
+    /* -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: relative;
     z-index: 2;
     letter-spacing: -1px;
     text-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+     */
+     color: var(--text-primary); /* Changed to use site's primary text color */
+    position: relative;
+    z-index: 2;
+    letter-spacing: -0.5px; 
 }
 
 .amc-services h2 i {
-    background: linear-gradient(135deg, #ff6b35, #f7931e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+   color: var(--primary-color); /* Changed to use site's primary color */
     margin-right: var(--space-sm);
     /* animation: cogSpin 4s linear infinite; */
 }
@@ -3030,6 +3032,5 @@ footer::before {
     }
 }
 .amc-line {
-    color: rgb(99, 99, 188);
-    text-emphasis-color: blue;
+    color: var(--primary-color);
 }
