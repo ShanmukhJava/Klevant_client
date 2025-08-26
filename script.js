@@ -25,18 +25,16 @@ if (contactForm) {
         
         // Get form data
         const formData = new FormData(this);
-        const formObject = {};
-        formData.forEach((value, key) => {
-            formObject[key] = value;
-        });
         
         // Basic form validation
+        // This line is looking for a 'message' field that doesn't exist
         const requiredFields = ['name', 'email', 'phone', 'service', 'message'];
         let isValid = true;
         
         requiredFields.forEach(field => {
             const input = document.getElementById(field);
-            if (!formObject[field] || formObject[field].trim() === '') {
+            const value = formData.get(field);
+            if (!value || value.trim() === '') {
                 input.style.borderColor = '#dc3545';
                 isValid = false;
             } else {
@@ -45,13 +43,38 @@ if (contactForm) {
         });
         
         if (isValid) {
-            // Simulate form submission
-            alert('Thank you for your message! We will contact you within 24 hours.');
-            this.reset();
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
             
-            // Reset border colors
-            requiredFields.forEach(field => {
-                document.getElementById(field).style.borderColor = '#ddd';
+            // Send data to PHP
+            fetch('send_mail.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Thank you for your message! We will contact you within 24 hours.');
+                    this.reset();
+                    // Reset border colors
+                    requiredFields.forEach(field => {
+                        document.getElementById(field).style.borderColor = '#ddd';
+                    });
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to send message'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Network error. Please try again.');
+            })
+            .finally(() => {
+                // Restore button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             });
         } else {
             alert('Please fill in all required fields.');
