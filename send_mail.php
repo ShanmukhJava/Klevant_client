@@ -45,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Port       = 465;
 
         // Sender & recipient
-        $mail->setFrom('mailing@ksquaremediahub.in', 'KSquare Media');
-        $mail->addAddress('ksquaremediahub@gmail.com');
+        $mail->setFrom('mailing@ksquaremediahub.in', 'Klevant Technologies');
+        $mail->addAddress('klevantautomate@gmail.com');
         $mail->addReplyTo($email, $name);
 
         // Email content
