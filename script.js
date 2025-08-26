@@ -26,9 +26,8 @@ if (contactForm) {
         // Get form data
         const formData = new FormData(this);
         
-        // Basic form validation
-        // This line is looking for a 'message' field that doesn't exist
-        const requiredFields = ['name', 'email', 'phone', 'service', 'message'];
+        // Basic form validation - removed 'message' field since it doesn't exist
+        const requiredFields = ['name', 'email', 'phone', 'service'];
         let isValid = true;
         
         requiredFields.forEach(field => {
@@ -49,7 +48,7 @@ if (contactForm) {
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
             
-            // Send data to PHP
+            // Actually send data to PHP
             fetch('send_mail.php', {
                 method: 'POST',
                 body: formData

@@ -8,6 +8,9 @@ error_reporting(E_ALL);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__.'/php_errors.log');
 
+// Set content type for JSON response
+header('Content-Type: application/json');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -26,11 +29,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $company = $_POST['company'] ?? 'Not specified';
     $property = $_POST['property'] ?? 'Not specified';
     
+    // Basic validation
+    if (empty($name) || empty($email) || empty($phone) || empty($service)) {
+        echo json_encode(['success' => false, 'error' => 'Required fields are missing']);
+        exit;
+    }
+    
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['success' => false, 'error' => 'Invalid email format']);
+        exit;
+    }
+    
     $mail = new PHPMailer(true);
 
     try {
-        // SMTP Debugging
-        $mail->SMTPDebug = 2; // Enable verbose debug output
+        // SMTP Debugging (disable in production)
+        $mail->SMTPDebug = 0; // Changed from 2 to 0 for production
         $mail->Debugoutput = function($str, $level) {
             error_log("PHPMailer: $str");
         };
@@ -39,15 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.hostinger.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'mailing@klevantautomate.com'; // your email
-        $mail->Password   = 'Klevant@2025';         // your email password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  // SSL
+        $mail->Username   = 'mailing@ksquaremediahub.in';
+        $mail->Password   = 'Klevant@2025';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL
         $mail->Port       = 465;
 
-
         // Sender & recipient
-        $mail->setFrom('mailing@klevantautomate.com', 'Klevant Technologies');
-        $mail->addAddress('klevantautomate@gmail.com');
+        $mail->setFrom('mailing@ksquaremediahub.in', 'Klevant Automation Contact Form');
+        $mail->addAddress('ksquaremediahub@gmail.com');
         $mail->addReplyTo($email, $name);
 
         // Email content
@@ -58,9 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p><strong>Name:</strong> $name</p>
             <p><strong>Email:</strong> $email</p>
             <p><strong>Phone:</strong> $phone</p>
-            <p><strong>Service:</strong> $service</p>
+            <p><strong>Service Interested In:</strong> $service</p>
             <p><strong>Company:</strong> $company</p>
             <p><strong>Property Type:</strong> $property</p>
+            <hr>
+            <p><em>This email was sent from the Klevant Automation contact form.</em></p>
         ";
 
         if ($mail->send()) {
@@ -70,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } catch (Exception $e) {
         error_log("Mailer Error: ".$e->getMessage());
-        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        echo json_encode(['success' => false, 'error' => 'Server error: ' . $e->getMessage()]);
     }
 } else {
     echo json_encode(['success' => false, 'error' => 'Invalid request method']);
