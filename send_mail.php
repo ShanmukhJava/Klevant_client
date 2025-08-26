@@ -39,13 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.hostinger.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'mailing@ksquaremediahub.in';
-        $mail->Password   = 'Klevant@2025';
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // SSL
+        $mail->Username   = 'mailing@klevantautomate.com'; // your email
+        $mail->Password   = 'Klevant@2025';         // your email password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  // SSL
         $mail->Port       = 465;
 
+
         // Sender & recipient
-        $mail->setFrom('mailing@ksquaremediahub.in', 'Klevant Technologies');
+        $mail->setFrom('mailing@klevantautomate.com', 'Klevant Technologies');
         $mail->addAddress('klevantautomate@gmail.com');
         $mail->addReplyTo($email, $name);
 
